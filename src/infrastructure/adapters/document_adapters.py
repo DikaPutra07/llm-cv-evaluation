@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from src.domain.ports.document_repository import IDocumentRepository 
 from src.domain.entities.document import CandidateDocument 
-from src.infrastructure.db_models import DocumentModel # Pastikan path ini benar!
+from src.infrastructure.db_models import DocumentModel
 
 class DocumentAdapter(IDocumentRepository):
     

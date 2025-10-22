@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy[asyncio]
+celery
+redis
+python-dotenv
+asyncpg
+eventlet
+# python-multipart

@@ -4,6 +4,7 @@ from sqlalchemy import Column, String, DateTime
 from fastapi import Depends
 import os
 from dotenv import load_dotenv
+from sqlalchemy.pool import NullPool
 
 load_dotenv()
 
@@ -19,14 +20,30 @@ class DocumentModel(Base):
     file_name = Column(String, nullable=False)
     doc_type = Column(String, nullable=False) 
     created_at = Column(DateTime, nullable=False)
+
+class EvaluationJobModel(Base): # BARU
+    __tablename__ = 'evaluation_jobs'
+    id = Column(String, primary_key=True, index=True)
+    cv_doc_id = Column(String, nullable=False)
+    report_doc_id = Column(String, nullable=False)
+    job_title = Column(String, nullable=False)
+    status = Column(String, nullable=False)
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+    result = Column(String, nullable=True)
     
 
-async_engine = create_async_engine(DATABASE_URL, echo=False)
+async_engine = create_async_engine(
+    DATABASE_URL, 
+    echo=False, 
+    future=True,
+    pool_size=30
+)
 
 AsyncSessionLocal = sessionmaker(
     async_engine, 
     class_=AsyncSession, 
-    expire_on_commit=False 
+    expire_on_commit=False
 )
 
 async def init_db():

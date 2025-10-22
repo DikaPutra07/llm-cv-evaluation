@@ -12,9 +12,12 @@ class CandidateDocument:
     doc_type: DocType
     created_at: datetime
 
-    def __init__(self, id: str, file_path: str, file_name: str, doc_type: DocType):
+    def __init__(self, id: str, file_path: str, file_name: str, doc_type: DocType, created_at: datetime = None):
         self.id = id
         self.file_path = file_path
         self.file_name = file_name
         self.doc_type = doc_type
-        self.created_at = datetime.now()
+        if created_at is None:
+            self.created_at = datetime.now()
+        else:
+            self.created_at = created_at

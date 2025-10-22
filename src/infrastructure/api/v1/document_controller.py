@@ -42,7 +42,6 @@ async def upload_documents(
             )
             uploaded_docs.append(doc)
             
-        # 3. Kembalikan ID
         cv_id = [d.id for d in uploaded_docs if d.doc_type == 'CV'][0]
         report_id = [d.id for d in uploaded_docs if d.doc_type == 'PROJECT_REPORT'][0]
         

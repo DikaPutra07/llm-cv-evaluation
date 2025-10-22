@@ -1,17 +1,18 @@
 from fastapi import FastAPI
 from src.infrastructure.api.v1 import document_controller
+from src.infrastructure.api.v1 import evaluation_controller
 from src.infrastructure.db_models import init_db 
 
 app = FastAPI(title="AI Screening Backend Service")
 
-# Setup Event Startup
 @app.on_event("startup")
 async def startup_event():
-    # Ini akan membuat table 'documents' di Postgres Docker lo
     await init_db() 
 
-# Register Router
-app.include_router(document_controller.router, tags=["Documents"], prefix="/api/v1")
+prefix = "/api/v1"
+
+app.include_router(document_controller.router, tags=["Documents"], prefix=prefix)
+app.include_router(evaluation_controller.router, tags=["Evaluation"], prefix=prefix)
 
 @app.get("/")
 def read_root():
